@@ -8,3 +8,9 @@ def atracoes(request):
 
 def produtos(request):
     return render(request, 'produtos.html')
+
+def login(request):
+    return render(request, 'Login.html')
+
+def cadastro(request):
+    return render(request, 'Cadastro.html')
