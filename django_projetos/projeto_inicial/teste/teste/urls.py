@@ -20,5 +20,5 @@ from teste2.views import inicio
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', inicio)
+    path('Home/', inicio)
 ]
