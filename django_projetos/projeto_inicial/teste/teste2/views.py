@@ -5,3 +5,6 @@ def pagina_inic(request):
 
 def atracoes(request):
     return render(request, 'atracoes.html')
+
+def produtos(request):
+    return render(request, 'produtos.html')
