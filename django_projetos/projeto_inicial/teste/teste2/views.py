@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import BancoForm
+from django.http import HttpRequest
 
 def pagina_inic(request):
     return render(request, 'pagina_inicial.html')
@@ -12,5 +14,13 @@ def produtos(request):
 def login(request):
     return render(request, 'Login.html')
 
-def cadastro(request):
-    return render(request, 'Cadastro.html')
+def cadastro(request:HttpRequest):
+    if request.method == "POST":
+        formulario = BancoForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect("loginsite")
+    cadastra_dados = {
+        "form":BancoForm
+    }
+    return render(request, 'Cadastro.html', cadastra_dados)
