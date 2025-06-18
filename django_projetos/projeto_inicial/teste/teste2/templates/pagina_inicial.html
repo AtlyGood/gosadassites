@@ -1,12 +1,226 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS MANOS - Parque de Diversão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF5E00;
+            --primary-dark: #E65500;
+            --secondary-color: #FFD700;
+            --text-light: #FFFFFF;
+            --text-dark: #333333;
+            --overlay-dark: rgba(0, 0, 0, 0.6);
+            --overlay-light: rgba(255, 255, 255, 0.1);
+            --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), 
+                        url('https://th.bing.com/th/id/OIP._6hNUzVAWuYmJA3_kLcv6wHaE7?rs=1&pid=ImgDetMain&cb=idpwebpc2');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--primary-color);
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .slogan {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            max-width: 800px;
+            line-height: 1.3;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--text-light);
+            padding: 1.2rem 2.5rem;
+            font-size: 1.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(255, 94, 0, 0.4);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 94, 0, 0.6);
+        }
+
+        .cta-button:hover::before {
+            opacity: 1;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        footer {
+            background-color: var(--overlay-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+                letter-spacing: 0.3rem;
+            }
+            
+            .slogan {
+                font-size: 1.8rem;
+                padding: 0 1rem;
+            }
+            
+            .cta-button {
+                font-size: 1.2rem;
+                padding: 1rem 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .slogan {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>OS MANOS</h1>
+    </div>
     
-    <body>
-        <h1>deu certo10</h1>
-    </body>
+    <div class="main-content">
+        <p class="slogan">No parque de diversão OS MANOS, você se diverte de verdade!</p>
+        <a href="{% url 'cadastro' %}" class="cta-button">CADASTRE-SE</a>
+    </div>
+    
+    <footer>
+        &copy; <span id="year"></span> OS MANOS - Todos os direitos reservados
+    </footer>
+
+    <script>
+        // Atualiza o ano automaticamente no footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Efeito de partículas opcional (pode ser removido se não quiser)
+        document.addEventListener('DOMContentLoaded', function() {
+            const particles = document.createElement('div');
+            particles.className = 'particles';
+            document.body.appendChild(particles);
+            
+            // Código para partículas pode ser adicionado aqui
+            // Ou usar uma biblioteca como particles.js
+        });
+    </script>
+</body>
 </html>
