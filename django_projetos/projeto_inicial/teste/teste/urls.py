@@ -21,7 +21,7 @@ from teste2.views import pagina_inic, atracoes, produtos, cadastro, login
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Home/', pagina_inic),
-    path('atracoes/', atracoes),
+    path('atracoes/', atracoes, name = "atracoesatalho"),
     path('Produtos/', produtos, name='produtossite'),
     path('Cadastro/', cadastro, name='cadastro'),
     path('Login/', login, name='loginsite')

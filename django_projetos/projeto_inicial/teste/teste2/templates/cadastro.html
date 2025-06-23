@@ -137,6 +137,10 @@
             color: #e65500;
             font-weight: bold;
             font-family: 'Arial', sans-serif;
+            transition: 0.8s;
+        }
+        a:hover{
+            opacity: 40%;
         }
 
         @media (max-width: 768px) {
@@ -183,7 +187,7 @@
                 <div class="form-group">
                     <label for="id_sobrenome">Sobrenome:</label>
                     <input type="text" name="sobrenome" id="id_sobrenome" required>
-                    <a>Já tem uma conta? <a href="{% url 'loginsite' %}">Login</a>
+                    Já tem uma conta? <a><a href="{% url 'loginsite' %}">Login</a>
                 </div>
                 
                 <button type="submit">Enviar</button>
