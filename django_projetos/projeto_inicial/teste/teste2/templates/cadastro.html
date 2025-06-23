@@ -133,6 +133,12 @@
             transform: translateY(-2px);
         }
 
+        a{
+            color: #e65500;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5rem;
@@ -177,6 +183,7 @@
                 <div class="form-group">
                     <label for="id_sobrenome">Sobrenome:</label>
                     <input type="text" name="sobrenome" id="id_sobrenome" required>
+                    <a>Já tem uma conta? <a href="{% url 'loginsite' %}">Login</a>
                 </div>
                 
                 <button type="submit">Enviar</button>
