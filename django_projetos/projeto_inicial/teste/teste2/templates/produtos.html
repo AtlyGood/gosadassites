@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -48,6 +49,7 @@
         .nav-buttons {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
         
         .nav-btn {
@@ -74,6 +76,82 @@
         
         .nav-btn:active {
             transform: translateY(0);
+        }
+
+        /* Perfil e dropdown */
+        .profile-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 150px;
+            overflow: hidden;
+            z-index: 100;
+            display: none;
+        }
+
+        .dropdown-item.delete-account {
+            color: #ff0000;
+            font-weight: bold;
+            border-top: 1px solid #f0f0f0;
+        }
+        .dropdown-item.delete-account:hover {
+            background-color: #ffeeee;
+}
+
+
+        .dropdown-menu.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+            color: #ff0058;
+        }
+
+        .dropdown-item.logout {
+            color: #ff0058;
+            font-weight: bold;
         }
         
         /* Produtos */
@@ -156,6 +234,11 @@
             transform: translateY(0);
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         @media (max-width: 768px) {
             .produtos-container {
                 grid-template-columns: 1fr;
@@ -181,6 +264,11 @@
                 padding: 8px 15px;
                 font-size: 0.8rem;
             }
+
+            .dropdown-menu {
+                right: 50%;
+                transform: translateX(50%);
+            }
         }
     </style>
 </head>
@@ -192,6 +280,15 @@
             <div class="nav-buttons">
                 <a href="{% url 'produtossite' %}" class="nav-btn">Produtos</a>
                 <a href="{% url 'atracoesatalho' %}" class="nav-btn">Atrações</a>
+                <div class="profile-container">
+                    <div class="profile-icon" id="profileIcon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil">
+                    </div>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="{% url 'homeatalho' %}" class="dropdown-item logout">Logout</a>
+                        <a href="#" class="dropdown-item delete-account" id="deleteAccountBtn">Excluir Conta</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -264,5 +361,75 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Dropdown do perfil - Funcionalidade básica
+        const profileIcon = document.getElementById('profileIcon');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+    
+        // Abrir/fechar dropdown
+        profileIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+        });
+    
+        // Fechar ao clicar fora
+        document.addEventListener('click', function() {
+            dropdownMenu.classList.remove('show');
+        });
+    
+        // Impedir fechamento ao clicar no menu
+        dropdownMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    
+        // Função para pegar CSRF Token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    
+        // Exclusão de conta
+        document.getElementById('deleteAccountBtn').addEventListener('click', async function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Impede que o dropdown feche
+            
+            if (confirm('Tem certeza que deseja excluir sua conta permanentemente?')) {
+                try {
+                    const response = await fetch("{% url 'delete_account' %}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'same-origin'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) throw new Error(data.message || 'Erro no servidor');
+                    
+                    if (data.success) {
+                        window.location.href = "{% url 'homeatalho' %}";
+                    } else {
+                        alert(data.message || 'Erro ao excluir conta');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alert('Falha na comunicação: ' + error.message);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

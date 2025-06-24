@@ -12,9 +12,9 @@
             --secondary-color: #FFD700;
             --text-light: #FFFFFF;
             --text-dark: #333333;
-            --overlay-dark: rgba(0, 0, 0, 0.6);
-            --overlay-light: rgba(255, 255, 255, 0.1);
-            --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --overlay-dark: rgba(255, 255, 255, 0.6);
+            --overlay-light: rgba(255, 0, 0, 0.1);
+            --box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -89,6 +89,13 @@
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
             animation: fadeIn 1.5s ease-out;
         }
+
+        .button-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         
         .cta-button {
             display: inline-block;
@@ -110,6 +117,11 @@
             z-index: 1;
         }
 
+        .login-button {
+            background: linear-gradient(135deg, var(--overlay-light), var(--overlay-dark));
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
         .cta-button::before {
             content: '';
             position: absolute;
@@ -123,9 +135,17 @@
             transition: var(--transition);
         }
 
+        .login-button::before {
+            background: linear-gradient(135deg, var(--overlay-dark), var(--overlay-light));
+        }
+
         .cta-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(255, 94, 0, 0.6);
+        }
+
+        .login-button:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .cta-button:hover::before {
@@ -181,6 +201,10 @@
                 font-size: 1.2rem;
                 padding: 1rem 2rem;
             }
+
+            .button-container {
+                gap: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -190,6 +214,16 @@
             
             .slogan {
                 font-size: 1.5rem;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .cta-button {
+                width: 100%;
             }
         }
     </style>
@@ -201,7 +235,10 @@
     
     <div class="main-content">
         <p class="slogan">No parque de diversão OS MANOS, você se diverte de verdade!</p>
-        <a href="{% url 'cadastro' %}" class="cta-button">CADASTRE-SE</a>
+        <div class="button-container">
+            <a href="{% url 'cadastro' %}" class="cta-button">CADASTRE-SE</a>
+            <a href="{% url 'loginsite' %}" class="cta-button login-button">LOGIN</a>
+        </div>
     </div>
     
     <footer>
