@@ -73,3 +73,19 @@ def delete_account(request):
         return JsonResponse({'success': False, 'message': 'Usuário não encontrado'}, status=404)
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+def editar_informacoes(request):
+    if 'usuario_email' not in request.session:
+        return redirect('loginsite')
+        
+    usuario = BancoModel.objects.get(email=request.session['usuario_email'])
+    
+    if request.method == 'POST':
+        form = BancoForm(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            return redirect('produtossite')
+    else:
+        form = BancoForm(instance=usuario)
+        
+    return render(request, 'editar_informacoes.html', {'form': form})

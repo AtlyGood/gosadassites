@@ -286,6 +286,7 @@
                     </div>
                     <div class="dropdown-menu" id="dropdownMenu">
                         <a href="{% url 'homeatalho' %}" class="dropdown-item logout">Logout</a>
+                        <a href="#" class="dropdown-item" id="editInfoBtn">Editar Informações</a>
                         <a href="#" class="dropdown-item delete-account" id="deleteAccountBtn">Excluir Conta</a>
                     </div>
                 </div>
@@ -302,7 +303,7 @@
                 <h2>PIPOCA</h2>
                 <p class="produto-descricao">Crocante, feita na hora e com docer restaurado. Doce ou salgado!</p>
                 <div class="produto-preco">R$ 10,00</div>
-                <button class="add-carrinho">Adicionar ao Carrinho</button>
+                <button class="add-carrinho">Comprar</button>
             </div>
         </div>
         
@@ -313,7 +314,7 @@
                 <h2>HOT DOG</h2>
                 <p class="produto-descricao">Pão navio, saldaria usufrinta e novas escravaturas. Simples ou completa!</p>
                 <div class="produto-preco">R$ 10,00</div>
-                <button class="add-carrinho">Adicionar ao Carrinho</button>
+                <button class="add-carrinho">Comprar</button>
             </div>
         </div>
         
@@ -324,7 +325,7 @@
                 <h2>ALGODÃO DOCE</h2>
                 <p class="produto-descricao">Leva: doce e colorido. Devra que todos o encantam!</p>
                 <div class="produto-preco">R$ 10,00</div>
-                <button class="add-carrinho">Adicionar ao Carrinho</button>
+                <button class="add-carrinho">Comprar</button>
             </div>
         </div>
         
@@ -335,7 +336,7 @@
                 <h2>COCA-COLA</h2>
                 <p class="produto-descricao">Refundância garantida! A tradicional coxa-COLA levar gaiada, acompanha qualquer lincha.</p>
                 <div class="produto-preco">R$ 10,00</div>
-                <button class="add-carrinho">Adicionar ao Carrinho</button>
+                <button class="add-carrinho">Comprar</button>
             </div>
         </div>
         
@@ -346,7 +347,7 @@
                 <h2>SORVETE</h2>
                 <p class="produto-descricao">Comentidade que derrete na boca! Além de não ser satisfazida da clássica até opções especiais.</p>
                 <div class="produto-preco">R$ 10,00</div>
-                <button class="add-carrinho">Adicionar ao Carrinho</button>
+                <button class="add-carrinho">Comprar</button>
             </div>
         </div>
         
@@ -357,7 +358,7 @@
                 <h2>PASTEL</h2>
                 <p class="produto-descricao">Crocante por fava, necessário da linha por dentro! Nosso pacto é frio na hora.</p>
                 <div class="produto-preco">R$ 10,00</div>
-                <button class="add-carrinho">Adicionar ao Carrinho</button>
+                <button class="add-carrinho">Comprar</button>
             </div>
         </div>
     </div>
@@ -366,6 +367,14 @@
         // Dropdown do perfil - Funcionalidade básica
         const profileIcon = document.getElementById('profileIcon');
         const dropdownMenu = document.getElementById('dropdownMenu');
+
+        // Adicionar funcionalidade para o botão "Editar Informações"
+        document.getElementById('editInfoBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            window.location.href = "{% url 'editar_informacoes' %}";
+        });
     
         // Abrir/fechar dropdown
         profileIcon.addEventListener('click', function(e) {
